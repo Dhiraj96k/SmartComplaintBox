@@ -1,6 +1,8 @@
 package com.example.smartcomlaintbox.complaintbox.ComplaintManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,11 +34,17 @@ public class AdminController {
     }
 
     @GetMapping("/getAdminmob")
-    public String GetAdmin(@RequestParam long mob, @RequestParam String pass) {
+    public ResponseEntity<?> getAdmin(
+            @RequestParam long mob,
+            @RequestParam String pass) {
+
         int result = adminServices.FindAdmin(mob, pass);
-        if (result == 1)
-            return "Admin Found";
-        return "Not Found";
+
+        if (result == 1) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
 }
