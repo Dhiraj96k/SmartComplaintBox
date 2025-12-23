@@ -18,19 +18,19 @@ public class AdminController {
     @Autowired
     AdminServices adminServices;
 
-    @PostMapping("/AddAdmin")
-    public String SaveAdmin(@RequestBody Admin admin) {
-        adminServices.addAdmin(admin);
-        return "Save";
+    @PostMapping("/admins")
+    public ResponseEntity<Admin> saveAdmin(@RequestBody Admin admin) {
+        Admin savedAdmin = adminServices.addAdmin(admin);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedAdmin);
     }
 
     @GetMapping("/getAdmin")
-    public String GetAdmin(@RequestParam String mail, @RequestParam String pass) {
+    public ResponseEntity<?> GetAdmin(@RequestParam String mail, @RequestParam String pass) {
         int result = adminServices.FindAdmin(mail, pass);
         if (result == 1)
-            return "Admin Found";
+            return ResponseEntity.ok().build();
         else
-            return "not found";
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     @GetMapping("/getAdminmob")
