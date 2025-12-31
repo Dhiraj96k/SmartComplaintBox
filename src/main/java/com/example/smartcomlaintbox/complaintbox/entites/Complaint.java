@@ -1,8 +1,10 @@
 package com.example.smartcomlaintbox.complaintbox.entites;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 
+import java.math.BigDecimal;
+
+import java.time.LocalDateTime;
 
 @Entity
 public class Complaint {
@@ -12,36 +14,38 @@ public class Complaint {
     private Integer cid;
 
     private String ctype;
-
     private String cdesc;
 
+    @Column(name = "created_time")
     private LocalDateTime createdTime;
 
+    @Column(name = "expected_time")
     private LocalDateTime expectedTime;
 
     private String status;
 
-    private Double latitude;
+    @Column(precision = 10, scale = 8)
+    private BigDecimal latitude;
 
-    private Double longitude;
+    @Column(precision = 11, scale = 8)
+    private BigDecimal longitude;
 
     private String lname;
 
+    @Column(name = "imagepath")
     private String imagePath;
 
-    // Many Complaints → One User
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Uid", foreignKey = @ForeignKey(name = "fk_user_complaint"))
+    @JoinColumn(name = "uid", referencedColumnName = "uid", nullable = false)
     private User user;
-    
-    
-    
 
 	public Complaint() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	public Complaint(Integer cid, String ctype, String cdesc, LocalDateTime createdTime, LocalDateTime expectedTime,
-			String status, Double latitude, Double longitude, String lname, String imagePath, User user) {
+			String status, BigDecimal latitude, BigDecimal longitude, String lname, String imagePath, User user) {
 		super();
 		this.cid = cid;
 		this.ctype = ctype;
@@ -104,19 +108,19 @@ public class Complaint {
 		this.status = status;
 	}
 
-	public Double getLatitude() {
+	public BigDecimal getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(Double latitude) {
+	public void setLatitude(BigDecimal latitude) {
 		this.latitude = latitude;
 	}
 
-	public Double getLongitude() {
+	public BigDecimal getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(Double longitude) {
+	public void setLongitude(BigDecimal longitude) {
 		this.longitude = longitude;
 	}
 
@@ -142,6 +146,13 @@ public class Complaint {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	@Override
+	public String toString() {
+		return "Complaint [cid=" + cid + ", ctype=" + ctype + ", cdesc=" + cdesc + ", createdTime=" + createdTime
+				+ ", expectedTime=" + expectedTime + ", status=" + status + ", latitude=" + latitude + ", longitude="
+				+ longitude + ", lname=" + lname + ", imagePath=" + imagePath + ", user=" + user + "]";
 	}
 
     

@@ -19,6 +19,7 @@ public class UserController {
 	@PostMapping("/AddUser")
 	public ResponseEntity<User> saveUser(@RequestBody User user) {
 	    User savedUser = UserServices.SaveUser(user);
+	    System.out.println(savedUser);
 
 	    if (savedUser == null) {
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
