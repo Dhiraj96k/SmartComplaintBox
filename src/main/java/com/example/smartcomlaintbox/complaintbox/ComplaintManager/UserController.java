@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.smartcomlaintbox.complaintbox.entites.Complaint;
 import com.example.smartcomlaintbox.complaintbox.entites.User;
 import com.example.smartcomlaintbox.complaintbox.services.UserServices;
 
@@ -19,13 +20,18 @@ public class UserController {
 	@PostMapping("/AddUser")
 	public ResponseEntity<User> saveUser(@RequestBody User user) {
 	    User savedUser = UserServices.SaveUser(user);
-	    System.out.println(savedUser);
 
 	    if (savedUser == null) {
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 	    }
 	    return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
 	}
-
 	
+	@PostMapping("/MakeComplaint")
+	public ResponseEntity<Complaint> makeComplaint(@RequestBody Complaint Complaint){
+		Complaint result = UserServices.makeComplaint(Complaint);
+		if(result == null)
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
+		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
 }
