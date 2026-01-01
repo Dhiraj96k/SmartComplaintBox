@@ -40,9 +40,9 @@ public class Complaint {
 	private String lname;
 
 	private String imagePath;
-	
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "u_Id",nullable = false,foreignKey = @ForeignKey(name = "fk_entity_user"))
-    private User user; 
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "u_Id", nullable = false, foreignKey = @ForeignKey(name = "fk_entity_user"))
+	private User user;
 
 }
